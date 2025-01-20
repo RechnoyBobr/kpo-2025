@@ -1,12 +1,10 @@
-package hse.kpo.services;
-
-import hse.kpo.domains.Car;
-import hse.kpo.domains.Customer;
-import hse.kpo.interfaces.ICarFactory;
-import hse.kpo.interfaces.ICarProvider;
+package studying;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class CarService implements ICarProvider {
 
@@ -16,18 +14,15 @@ public class CarService implements ICarProvider {
 
     @Override
     public Car takeCar(Customer customer) {
-
         var filteredCars = cars.stream().filter(car -> car.isCompatible(customer)).toList();
-
-        var firstCar = filteredCars.stream().findFirst();
-
-        firstCar.ifPresent(cars::remove);
-
-        return firstCar.orElse(null);
+        if (filteredCars.isEmpty()) {
+            return null;
+        }
+        cars.remove(filteredCars.getFirst());
+        return filteredCars.getFirst();
     }
 
-    public <TParams> void addCar(ICarFactory<TParams> carFactory, TParams carParams)
-    {
+    public <TParams> void addCar(ICarFactory<TParams> carFactory, TParams carParams) {
         // создаем автомобиль из переданной фабрики
         var car = carFactory.createCar(
                 carParams, // передаем параметры
