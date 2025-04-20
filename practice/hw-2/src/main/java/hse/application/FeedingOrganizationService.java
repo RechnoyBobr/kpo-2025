@@ -65,7 +65,7 @@ public class FeedingOrganizationService {
                     animal,
                     schedule,
                     LocalDateTime.now(),
-                    schedule.getIsCarnivore() ? "meat" : "plants"
+                    animal.getFavouriteFood()
                 );
                 EventsStorage.addFeedEvent(event);
 
