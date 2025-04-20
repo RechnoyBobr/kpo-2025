@@ -12,7 +12,6 @@ public enum AnimalType {
     /**
      * Convert Animal type to string.
      *
-     * @param animalType Animal type
      * @return String
      */
     public  String toString() {
