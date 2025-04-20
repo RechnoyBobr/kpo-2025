@@ -3,10 +3,13 @@ package hse.domain;
 import hse.valueObjects.AnimalType;
 import java.util.ArrayList;
 import java.util.List;
+import lombok.Getter;
+
 
 /**
  * Enclosure class.
  */
+@Getter
 public class Enclosure {
 
     /**
@@ -67,12 +70,30 @@ public class Enclosure {
      *
      * @param animal Animal to remove.
      */
-    public void removeAnimal(final Animal animal) {
-        boolean isDeleted = this.animals.remove(animal);
-        if (!isDeleted) {
-            throw new IllegalArgumentException(
-                "There is no such animal in this enclosure"
-            );
+    public void removeAnimal(int ind) {
+        this.animals.remove(ind);
+    }
+
+    public boolean hasAnimal(final Animal animal) {
+        return this.animals.contains(animal);
+    }
+
+    /**
+     * Returns animal by his name.
+     *
+     * @param name Name of animal.
+     * @return Animal.
+     */
+    public int hasAnimal(final String name) {
+        for (int i = 0; i < animals.size(); i++) {
+            if (animals.get(i).getName().equals(name)) {
+                return i;
+            }
         }
+        return -1;
+    }
+
+    public Animal getAnimal(final int ind) {
+        return animals.get(ind);
     }
 }

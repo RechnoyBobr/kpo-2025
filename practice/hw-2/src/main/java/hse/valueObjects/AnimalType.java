@@ -7,6 +7,7 @@ public enum AnimalType {
     CARNIVORE,
     HERBIVORE,
     FISH,
+    OMNIVORE,
     BIRD;
 
     /**
@@ -14,12 +15,24 @@ public enum AnimalType {
      *
      * @return String
      */
-    public  String toString() {
+    public String toString() {
         return switch (this) {
             case CARNIVORE -> "Плотоядное";
             case HERBIVORE -> "Травоядное";
             case FISH -> "Рыба";
             case BIRD -> "Птица";
+            case OMNIVORE -> "Всеядное";
+        };
+    }
+
+    public static AnimalType fromString(final String str) {
+        return switch (str) {
+            case "CARNIVORE" -> CARNIVORE;
+            case "HERBIVORE" -> HERBIVORE;
+            case "FISH" -> FISH;
+            case "BIRD" -> BIRD;
+            case "OMNIVORE" -> OMNIVORE;
+            default -> CARNIVORE;
         };
     }
 }

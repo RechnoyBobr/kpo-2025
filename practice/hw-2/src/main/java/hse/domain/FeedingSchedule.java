@@ -2,11 +2,13 @@ package hse.domain;
 
 import java.time.LocalTime;
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 
 /**
  * Schedule of animal feeding.
  */
 @AllArgsConstructor
+@Getter
 public class FeedingSchedule {
 
     /**

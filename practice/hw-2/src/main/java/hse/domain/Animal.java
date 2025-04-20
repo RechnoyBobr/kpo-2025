@@ -2,13 +2,17 @@ package hse.domain;
 
 import hse.valueObjects.AnimalType;
 import java.time.LocalDate;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 
 /**
  * Animal domain class.
  */
+@Log4j2
 @RequiredArgsConstructor
+@AllArgsConstructor
 @Getter
 public class Animal {
 
@@ -47,22 +51,19 @@ public class Animal {
      */
     private Boolean isHealthy;
 
-    /**
-     * Is animal hungry.
-     */
-    private Boolean isHungry;
 
     /**
      * Feed animal.
      */
     public void feed() {
-        isHungry = false;
+        log.info(String.format("Feeding animal %s", this.name));
     }
 
     /**
      * Heal animal.
      */
     public void healAnimal() {
+        log.info(String.format("Healing animal %s", this.name));
         isHealthy = true;
     }
 }
