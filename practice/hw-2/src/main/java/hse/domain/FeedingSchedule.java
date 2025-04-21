@@ -42,4 +42,12 @@ public class FeedingSchedule {
         this.animal.feed();
 
     }
+
+    @Override
+    public String toString() {
+        return String.format(
+            "Feeding Schedule: \n\t %s, \n\t Feeding time: %s,\n\t Food type: %s\n",
+            this.animal.toString(), this.feedingTime.toString(), this.isCarnivore ? "Meat" : "Plants"
+        );
+    }
 }

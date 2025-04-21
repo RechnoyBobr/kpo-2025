@@ -22,7 +22,7 @@ public class AnimalTransferService {
      * @param from Enclosure to transfer from
      * @param to   Enclosure to transfer to
      */
-    public void transfer(final String name, int from, int to) {
+    public AnimalMovedEvent transfer(final String name, int from, int to) {
         final Enclosure enclosure = EnclosureStorage.getEnclosure(from);
         int ind = enclosure.hasAnimal(name);
         if (ind != -1) {
@@ -36,6 +36,7 @@ public class AnimalTransferService {
                 LocalDateTime.now()
             );
             EventsStorage.addMoveEvent(event);
+            return event;
         } else {
             throw new IllegalArgumentException(
                 String.format("No animal %s found in %d enclosure", name, from)

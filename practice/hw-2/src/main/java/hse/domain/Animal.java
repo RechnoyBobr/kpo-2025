@@ -66,4 +66,13 @@ public class Animal {
         log.info(String.format("Healing animal %s", this.name));
         isHealthy = true;
     }
+
+    @Override
+    public String toString() {
+        return String.format(
+            "Animal:\n\t Name: %s,\n\t Type: %s\n\t Birthdate: %s,\n\t Sex: %s,\n\t Specie: %s,\n\t Favourite food: %s,\n\t health: %s",
+            this.name, this.type.toString(), this.birthDate.toString(), this.isMale ? "Male" : "Female", this.specie,
+            this.favouriteFood, this.isHealthy ? "Healthy" : "Ill"
+        );
+    }
 }

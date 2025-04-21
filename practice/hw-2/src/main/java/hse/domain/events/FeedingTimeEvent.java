@@ -10,4 +10,11 @@ import java.time.LocalDateTime;
  */
 public record FeedingTimeEvent(Enclosure enclosure, Animal animal, FeedingSchedule schedule, LocalDateTime timestamp,
                                String foodType) {
+    @Override
+    public String toString() {
+        return String.format(
+            "Feeding event:\n\t %s,\n\t %s,\n\t At:  %s",
+            enclosure.toString(), animal.toString(), timestamp.toString()
+        );
+    }
 }

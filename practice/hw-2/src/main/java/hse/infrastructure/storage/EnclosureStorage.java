@@ -23,6 +23,9 @@ public class EnclosureStorage {
      * @param ind Index of enclosure
      */
     public static void deleteEnclosure(int ind) {
+        if (!enclosures.get(ind).getAnimals().isEmpty()) {
+            throw new IllegalStateException("Enclosure must be empty to be deleted");
+        }
         enclosures.remove(ind);
     }
 

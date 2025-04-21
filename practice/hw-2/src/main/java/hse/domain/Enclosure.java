@@ -3,6 +3,7 @@ package hse.domain;
 import hse.valueObjects.AnimalType;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 import lombok.Getter;
 
 
@@ -95,5 +96,14 @@ public class Enclosure {
 
     public Animal getAnimal(final int ind) {
         return animals.get(ind);
+    }
+
+    @Override
+    public String toString() {
+        return String.format(
+            "Enclosure:\n\tAnimals:\n\t\t%s\n,\n\tmaxCapacity:%d,\n\tcurrentCapacity:%d",
+            this.animals.stream().map(Animal::toString).collect(Collectors.joining("\n\t")),
+            this.maxAnimals, this.currentAnimals
+        );
     }
 }

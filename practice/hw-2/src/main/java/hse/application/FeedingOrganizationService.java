@@ -25,10 +25,12 @@ public class FeedingOrganizationService {
      * @param animal      The animal to create a schedule for
      * @param feedingTime The time when the animal should be fed
      * @param isCarnivore Whether the animal is carnivorous
+     * @return FeedingSchedule
      */
-    public void createFeedingSchedule(Animal animal, LocalTime feedingTime, boolean isCarnivore) {
+    public FeedingSchedule createFeedingSchedule(Animal animal, LocalTime feedingTime, boolean isCarnivore) {
         FeedingSchedule schedule = new FeedingSchedule(animal, feedingTime, isCarnivore);
         ScheduleStorage.addSchedule(schedule);
+        return schedule;
     }
 
     /**
@@ -51,12 +53,12 @@ public class FeedingOrganizationService {
     /**
      * Processes feeding for all animals at the current time.
      */
-    public void processFeeding() {
+    public String processFeeding() {
         LocalTime currentTime = LocalTime.now();
         List<FeedingSchedule> schedules = ScheduleStorage.getSchedules();
-
+        StringBuilder builder = new StringBuilder();
         for (FeedingSchedule schedule : schedules) {
-            if (schedule.getFeedingTime().equals(currentTime)) {
+            if (schedule.getFeedingTime().withSecond(0).equals(currentTime.withSecond(0).withNano(0))) {
                 Animal animal = schedule.getAnimal();
                 Enclosure enclosure = EnclosureStorage.getEnclosureFromName(animal.getName());
 
@@ -64,13 +66,45 @@ public class FeedingOrganizationService {
                     enclosure,
                     animal,
                     schedule,
-                    LocalDateTime.now(),
+                    LocalDateTime.now().withSecond(0),
                     animal.getFavouriteFood()
                 );
                 EventsStorage.addFeedEvent(event);
-
+                builder.append(event.toString());
                 schedule.feedAnimal();
             }
+        }
+        return builder.toString();
+    }
+
+    /**
+     * Get schedule by name.
+     *
+     * @param animalName Animal name
+     * @return Feeding schedule
+     */
+    public FeedingSchedule getSchedule(String animalName) {
+        var res = ScheduleStorage.getSchedules().stream().filter(
+            schedule -> schedule.getAnimal().getName().equals(animalName)).findFirst();
+        if (res.isPresent()) {
+            return res.get();
+        } else {
+            throw new IllegalArgumentException("No Schedule found for animal: " + animalName);
+        }
+    }
+
+    /**
+     * Delete feeding schedule by animal name.
+     *
+     * @param animalName Animal name
+     */
+    public void deleteFeedingSchedule(String animalName) {
+        var res = ScheduleStorage.getSchedules().stream().filter(
+            schedule -> schedule.getAnimal().getName().equals(animalName)).findFirst();
+        if (res.isPresent()) {
+            ScheduleStorage.getSchedules().remove(res.get());
+        } else {
+            throw new IllegalArgumentException("No Schedule found for animal: " + animalName);
         }
     }
 

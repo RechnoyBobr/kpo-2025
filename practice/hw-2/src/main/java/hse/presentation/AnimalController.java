@@ -4,11 +4,13 @@ package hse.presentation;
 import hse.domain.Animal;
 import hse.infrastructure.facade.ZooFacade;
 import hse.valueObjects.AnimalParams;
+import hse.valueObjects.AnimalStatistics;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -27,7 +29,7 @@ import org.springframework.web.server.ResponseStatusException;
 public class AnimalController {
     private final ZooFacade facade;
 
-    @PostMapping()
+    @PostMapping("/create")
     @Operation(
         summary = "Добавить животное в зоопарк",
         description = "Тип животного должен совпадать с типами AnimalType"
@@ -68,9 +70,9 @@ public class AnimalController {
         }
     }
 
-    @GetMapping("/get/statistics")
+    @GetMapping(value = "/get/statistics", produces = MediaType.APPLICATION_JSON_VALUE)
     @Operation(summary = "Возвращает статистику по животным")
-    public ResponseEntity<Void> getStatistics() {
-        return ResponseEntity.ok().build();
+    public ResponseEntity<AnimalStatistics> getStatistics() {
+        return ResponseEntity.ok(facade.getAnimalsStats());
     }
 }
