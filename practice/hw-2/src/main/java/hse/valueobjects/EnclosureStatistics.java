@@ -1,12 +1,12 @@
-package hse.valueObjects;
+package hse.valueobjects;
 
 /**
  * Record that holds statistics about an enclosure.
  *
- * @param enclosureName Name of the enclosure
- * @param animalType Type of animals in the enclosure
- * @param occupiedPlaces Number of occupied places
- * @param totalPlaces Total number of places in the enclosure
+ * @param index       Name of the enclosure
+ * @param animalType          Type of animals in the enclosure
+ * @param occupiedPlaces      Number of occupied places
+ * @param totalPlaces         Total number of places in the enclosure
  * @param occupancyPercentage Percentage of occupied places
  */
 public record EnclosureStatistics(
@@ -19,12 +19,12 @@ public record EnclosureStatistics(
     /**
      * Creates a new EnclosureStatistics instance.
      *
-     * @param enclosureName Name of the enclosure
-     * @param animalType Type of animals in the enclosure
+     * @param ind  Name of the enclosure
+     * @param animalType     Type of animals in the enclosure
      * @param occupiedPlaces Number of occupied places
-     * @param totalPlaces Total number of places in the enclosure
+     * @param totalPlaces    Total number of places in the enclosure
      */
-    public EnclosureStatistics(int ind,AnimalType animalType, int occupiedPlaces, int totalPlaces) {
+    public EnclosureStatistics(int ind, AnimalType animalType, int occupiedPlaces, int totalPlaces) {
         this(
             ind,
             animalType,

@@ -1,6 +1,6 @@
 package hse.domain;
 
-import hse.valueObjects.AnimalType;
+import hse.valueobjects.AnimalType;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -39,7 +39,7 @@ public class Enclosure {
     public Enclosure(final AnimalType type, final int maxAnimals) {
         this.type = type;
         this.maxAnimals = maxAnimals;
-        animals = new ArrayList<Animal>(maxAnimals);
+        animals = new ArrayList<>(maxAnimals);
     }
 
     /**
@@ -69,14 +69,10 @@ public class Enclosure {
     /**
      * Remove animal.
      *
-     * @param animal Animal to remove.
+     * @param ind Index of animal
      */
     public void removeAnimal(int ind) {
         this.animals.remove(ind);
-    }
-
-    public boolean hasAnimal(final Animal animal) {
-        return this.animals.contains(animal);
     }
 
     /**
@@ -94,6 +90,12 @@ public class Enclosure {
         return -1;
     }
 
+    /**
+     * Returns animal from index.
+     *
+     * @param ind Index
+     * @return Animal
+     */
     public Animal getAnimal(final int ind) {
         return animals.get(ind);
     }

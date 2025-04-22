@@ -1,10 +1,9 @@
 package hse.presentation;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import hse.domain.FeedingSchedule;
 import hse.infrastructure.facade.ZooFacade;
-import hse.valueObjects.FeedingScheduleParams;
-import hse.valueObjects.ScheduleUpdateParams;
+import hse.valueobjects.FeedingScheduleParams;
+import hse.valueobjects.ScheduleUpdateParams;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
@@ -23,11 +22,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
-import java.time.format.FormatStyle;
-import java.util.List;
-
+/**
+ * Controller for feeding schedules.
+ */
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/schedule")
@@ -35,6 +32,13 @@ import java.util.List;
 public class FeedingSchedulesController {
     private final ZooFacade facade;
 
+    /**
+     * Create schedule.
+     *
+     * @param request       Request
+     * @param bindingResult Binding request
+     * @return Schedule
+     */
     @PostMapping()
     @Operation(
         summary = "Создать расписание кормления",
@@ -44,7 +48,7 @@ public class FeedingSchedulesController {
                                                           BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
-                bindingResult.getAllErrors().get(0).getDefaultMessage());
+                bindingResult.getAllErrors().getFirst().getDefaultMessage());
         }
         try {
             FeedingSchedule result = facade.createFeedingSchedule(request);
@@ -54,6 +58,14 @@ public class FeedingSchedulesController {
         }
     }
 
+    /**
+     * Update schedule.
+     *
+     * @param animalName    Animal name
+     * @param newt          New time params
+     * @param bindingResult Result of binding
+     * @return Schedule
+     */
     @PutMapping(value = "/update/{animalName}", produces = MediaType.APPLICATION_JSON_VALUE)
     @Operation(
         summary = "Обновить расписание кормления",
@@ -66,7 +78,7 @@ public class FeedingSchedulesController {
     ) {
         if (bindingResult.hasErrors()) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
-                bindingResult.getAllErrors().get(0).getDefaultMessage());
+                bindingResult.getAllErrors().getFirst().getDefaultMessage());
         }
         try {
 
@@ -77,6 +89,12 @@ public class FeedingSchedulesController {
         }
     }
 
+    /**
+     * Delete animal schedule by name.
+     *
+     * @param animalName Animal name
+     * @return Status
+     */
     @DeleteMapping("/delete/{animalName}")
     @Operation(
         summary = "Удалить расписание кормления",
@@ -91,6 +109,12 @@ public class FeedingSchedulesController {
         }
     }
 
+    /**
+     * Get animal schedule by name.
+     *
+     * @param animalName Name
+     * @return Schedule
+     */
     @GetMapping(value = "/get/{animalName}", produces = MediaType.APPLICATION_JSON_VALUE)
     @Operation(
         summary = "Получить расписание кормления",
@@ -104,6 +128,11 @@ public class FeedingSchedulesController {
         }
     }
 
+    /**
+     * Get all schedules.
+     *
+     * @return Schedules.
+     */
     @GetMapping(value = "/get/all", produces = MediaType.APPLICATION_JSON_VALUE)
     @Operation(
         summary = "Получить все расписания кормления",
@@ -113,12 +142,22 @@ public class FeedingSchedulesController {
         return ResponseEntity.ok(facade.getAllFeedingSchedules());
     }
 
+    /**
+     * Feed animals.
+     *
+     * @return Report
+     */
     @GetMapping(value = "/feed")
     @Operation(summary = "Кормит всех животных в текущее время (до минуты)")
     public ResponseEntity<String> feedAnimals() {
         return ResponseEntity.ok(facade.feedAnimals());
     }
 
+    /**
+     * Get all events.
+     *
+     * @return Report
+     */
     @GetMapping(value = "/events")
     @Operation(summary = "Возвращает все ивенты кормления животных")
     public ResponseEntity<String> getFeedingEvents() {

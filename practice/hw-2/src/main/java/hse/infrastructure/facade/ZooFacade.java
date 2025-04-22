@@ -11,19 +11,17 @@ import hse.domain.events.FeedingTimeEvent;
 import hse.infrastructure.storage.EnclosureStorage;
 import hse.infrastructure.storage.EventsStorage;
 import hse.infrastructure.storage.ScheduleStorage;
-import hse.valueObjects.AnimalParams;
-import hse.valueObjects.AnimalType;
-import hse.valueObjects.EnclosureParams;
-import hse.valueObjects.EnclosureStatistics;
-import hse.valueObjects.AnimalStatistics;
-import hse.valueObjects.FeedingScheduleParams;
-import java.time.LocalDate;
+import hse.valueobjects.AnimalParams;
+import hse.valueobjects.AnimalStatistics;
+import hse.valueobjects.AnimalType;
+import hse.valueobjects.EnclosureParams;
+import hse.valueobjects.EnclosureStatistics;
+import hse.valueobjects.FeedingScheduleParams;
 import java.time.LocalTime;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
 /**
  * Facade for zoo management.
@@ -199,10 +197,20 @@ public class ZooFacade {
         );
     }
 
+    /**
+     * Feed animals.
+     *
+     * @return Report
+     */
     public String feedAnimals() {
         return feedingService.processFeeding();
     }
 
+    /**
+     * Get moved events.
+     *
+     * @return Report
+     */
     public String getMovedEvents() {
         return String.format(
             "Moving events: \n\t %s",
@@ -210,10 +218,25 @@ public class ZooFacade {
         );
     }
 
+    /**
+     * Get feeding events.
+     *
+     * @return Report
+     */
     public String getFeedingEvents() {
         return String.format(
             "Feeding events: \n\t %s",
             EventsStorage.getFeedEvents().stream().map(FeedingTimeEvent::toString).collect(Collectors.joining("\n\t"))
         );
+    }
+
+    /**
+     * Flush all storages.
+     */
+    public void flush() {
+        EnclosureStorage.getEnclosures().clear();
+        ScheduleStorage.getSchedules().clear();
+        EventsStorage.getFeedEvents().clear();
+        EventsStorage.getMoveEvents().clear();
     }
 }

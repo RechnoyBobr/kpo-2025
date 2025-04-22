@@ -1,7 +1,14 @@
-package hse.valueObjects;
+package hse.valueobjects;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 
+/**
+ * Animal moving params.
+ *
+ * @param animalName Name
+ * @param from       From
+ * @param to         To
+ */
 public record AnimalMovingParams(
     @Schema(description = "Имя животного", example = "Барсик")
     String animalName,

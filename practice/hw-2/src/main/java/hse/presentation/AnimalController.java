@@ -3,8 +3,8 @@ package hse.presentation;
 
 import hse.domain.Animal;
 import hse.infrastructure.facade.ZooFacade;
-import hse.valueObjects.AnimalParams;
-import hse.valueObjects.AnimalStatistics;
+import hse.valueobjects.AnimalParams;
+import hse.valueobjects.AnimalStatistics;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
@@ -22,6 +22,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
+/**
+ * Rest controller for animals.
+ */
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/animal")
@@ -29,6 +32,13 @@ import org.springframework.web.server.ResponseStatusException;
 public class AnimalController {
     private final ZooFacade facade;
 
+    /**
+     * Create animal.
+     *
+     * @param request       Request
+     * @param bindingResult Binding request
+     * @return Animal
+     */
     @PostMapping("/create")
     @Operation(
         summary = "Добавить животное в зоопарк",
@@ -37,7 +47,7 @@ public class AnimalController {
     public ResponseEntity<Animal> createAnimal(@Valid @RequestBody AnimalParams request, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
-                bindingResult.getAllErrors().get(0).getDefaultMessage());
+                bindingResult.getAllErrors().getFirst().getDefaultMessage());
         }
         try {
             Animal result = facade.addAnimal(request);
@@ -48,6 +58,12 @@ public class AnimalController {
         }
     }
 
+    /**
+     * Delete animal.
+     *
+     * @param name Animal name
+     * @return Status
+     */
     @DeleteMapping("/delete/{name}")
     @Operation(summary = "Убрать животное из зоопарка",
         description = "Принимает имя животного")
@@ -60,6 +76,12 @@ public class AnimalController {
         return ResponseEntity.ok().build();
     }
 
+    /**
+     * Get animal by name.
+     *
+     * @param name Animal name
+     * @return Animal
+     */
     @GetMapping("/get/{name}")
     @Operation(summary = "Получает животное по имени")
     public ResponseEntity<Animal> getAnimal(@PathVariable String name) {
@@ -70,6 +92,11 @@ public class AnimalController {
         }
     }
 
+    /**
+     * Get stats.
+     *
+     * @return Report
+     */
     @GetMapping(value = "/get/statistics", produces = MediaType.APPLICATION_JSON_VALUE)
     @Operation(summary = "Возвращает статистику по животным")
     public ResponseEntity<AnimalStatistics> getStatistics() {

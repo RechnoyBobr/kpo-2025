@@ -2,7 +2,7 @@ package hse.infrastructure.storage;
 
 import hse.domain.Animal;
 import hse.domain.Enclosure;
-import hse.valueObjects.AnimalType;
+import hse.valueobjects.AnimalType;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.Getter;
@@ -63,6 +63,12 @@ public class EnclosureStorage {
         );
     }
 
+    /**
+     * Get compatible enclosure.
+     *
+     * @param type Type of enclosure
+     * @return Index
+     */
     public static int getCompatibleEnclosureInd(AnimalType type) {
         for (int i = 0; i < enclosures.size(); i++) {
             Enclosure enc = enclosures.get(i);
@@ -75,6 +81,12 @@ public class EnclosureStorage {
         );
     }
 
+    /**
+     * Get enclosure with animal name in it.
+     *
+     * @param name Name of animal
+     * @return Enclosure
+     */
     public static Enclosure getEnclosureFromName(String name) {
         for (Enclosure enc : enclosures) {
             int ind = enc.hasAnimal(name);

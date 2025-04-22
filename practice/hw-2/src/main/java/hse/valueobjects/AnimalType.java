@@ -1,4 +1,4 @@
-package hse.valueObjects;
+package hse.valueobjects;
 
 /**
  * Animal type.
@@ -25,6 +25,12 @@ public enum AnimalType {
         };
     }
 
+    /**
+     * Converts string to animal type.
+     *
+     * @param str String
+     * @return Animal type
+     */
     public static AnimalType fromString(final String str) {
         return switch (str) {
             case "CARNIVORE" -> CARNIVORE;

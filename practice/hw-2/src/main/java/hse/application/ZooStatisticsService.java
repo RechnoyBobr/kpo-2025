@@ -3,14 +3,13 @@ package hse.application;
 import hse.domain.Animal;
 import hse.domain.Enclosure;
 import hse.infrastructure.storage.EnclosureStorage;
-import hse.valueObjects.AnimalType;
-import hse.valueObjects.EnclosureStatistics;
-import org.springframework.stereotype.Service;
-
+import hse.valueobjects.AnimalType;
+import hse.valueobjects.EnclosureStatistics;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import org.springframework.stereotype.Service;
 
 /**
  * Service for collecting and providing zoo statistics.

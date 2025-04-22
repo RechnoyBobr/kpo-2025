@@ -1,4 +1,4 @@
-package hse.valueObjects;
+package hse.valueobjects;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -6,6 +6,17 @@ import jakarta.validation.constraints.Pattern;
 import java.time.LocalDate;
 import lombok.Builder;
 
+/**
+ * Animal params.
+ *
+ * @param name          Name
+ * @param type          Type
+ * @param specie        Specie
+ * @param birthDate     Birthdate
+ * @param isMale        Sex
+ * @param favouriteFood Favourite food
+ * @param isHealthy     Is healthy
+ */
 @Builder
 public record AnimalParams(
     @Schema(description = "Кличка животного", example = "Барсик")

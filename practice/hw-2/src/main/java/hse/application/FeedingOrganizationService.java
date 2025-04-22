@@ -7,11 +7,10 @@ import hse.domain.events.FeedingTimeEvent;
 import hse.infrastructure.storage.EnclosureStorage;
 import hse.infrastructure.storage.EventsStorage;
 import hse.infrastructure.storage.ScheduleStorage;
-import org.springframework.stereotype.Service;
-
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
+import org.springframework.stereotype.Service;
 
 /**
  * Service for organizing the feeding process of animals.
@@ -70,7 +69,7 @@ public class FeedingOrganizationService {
                     animal.getFavouriteFood()
                 );
                 EventsStorage.addFeedEvent(event);
-                builder.append(event.toString());
+                builder.append(event);
                 schedule.feedAnimal();
             }
         }

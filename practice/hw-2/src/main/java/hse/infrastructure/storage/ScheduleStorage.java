@@ -7,12 +7,15 @@ import java.util.ArrayList;
 import java.util.List;
 import lombok.Getter;
 
+/**
+ * Schedule storage.
+ */
 public class ScheduleStorage {
     /**
      * List of schedules.
      */
     @Getter
-    private static List<FeedingSchedule> schedules = new ArrayList<>(0);
+    private static final List<FeedingSchedule> schedules = new ArrayList<>(0);
 
     /**
      * Adds schedule to storage.
@@ -33,6 +36,12 @@ public class ScheduleStorage {
         schedules.get(ind).changeSchedule(newTime);
     }
 
+    /**
+     * Get feeding time of an animal.
+     *
+     * @param animal Animal
+     * @return Time
+     */
     public static LocalTime getFeedingTime(Animal animal) {
         for (FeedingSchedule schedule : schedules) {
             if (schedule.getAnimal().equals(animal)) {

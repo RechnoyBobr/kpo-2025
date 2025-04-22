@@ -3,16 +3,14 @@ package hse.presentation;
 import hse.domain.Enclosure;
 import hse.domain.events.AnimalMovedEvent;
 import hse.infrastructure.facade.ZooFacade;
-import hse.infrastructure.storage.EnclosureStorage;
-import hse.valueObjects.AnimalMovingParams;
-import hse.valueObjects.EnclosureParams;
-import hse.valueObjects.EnclosureStatistics;
+import hse.valueobjects.AnimalMovingParams;
+import hse.valueobjects.EnclosureParams;
+import hse.valueobjects.EnclosureStatistics;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -26,6 +24,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
+/**
+ * Rest controller for enclosures.
+ */
 @RestController
 @RequestMapping("/api/enclosure")
 @RequiredArgsConstructor
@@ -47,7 +48,7 @@ public class EnclosureController {
     ResponseEntity<Enclosure> createEnclosure(@Valid @RequestBody EnclosureParams params, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
-                bindingResult.getAllErrors().get(0).getDefaultMessage());
+                bindingResult.getAllErrors().getFirst().getDefaultMessage());
         }
         try {
             var result = facade.createEnclosure(params);
@@ -69,7 +70,7 @@ public class EnclosureController {
     ResponseEntity<Void> deleteEnclosure(@Valid @PathVariable Integer ind, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
-                bindingResult.getAllErrors().get(0).getDefaultMessage());
+                bindingResult.getAllErrors().getFirst().getDefaultMessage());
         }
         try {
             facade.deleteEnclosure(ind);
@@ -90,6 +91,12 @@ public class EnclosureController {
         return ResponseEntity.ok(facade.getEnclosureStats());
     }
 
+    /**
+     * Get enclosure info.
+     *
+     * @param ind Enclosure index
+     * @return Report
+     */
     @GetMapping(value = "/get/{ind}")
     @Operation(summary = "Возвращает информацию по вольеру с номером ind")
     ResponseEntity<String> getEnclosure(@Valid @PathVariable Integer ind) {
@@ -101,19 +108,31 @@ public class EnclosureController {
         }
     }
 
+    /**
+     * Return all events.
+     *
+     * @return Report
+     */
     @GetMapping(value = "/events")
     @Operation(summary = "Возвращает все ивенты перемещений")
     ResponseEntity<String> getEvents() {
         return ResponseEntity.ok(facade.getMovedEvents());
     }
 
+    /**
+     * Transfer animal.
+     *
+     * @param params        Transfer params
+     * @param bindingResult Result of binding
+     * @return Event report
+     */
     @PostMapping(value = "/transfer")
     @Operation(summary = "Перемещает животное между вольерами")
     ResponseEntity<AnimalMovedEvent> transferAnimal(@Valid @RequestBody AnimalMovingParams params,
                                                     BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
-                bindingResult.getAllErrors().get(0).getDefaultMessage());
+                bindingResult.getAllErrors().getFirst().getDefaultMessage());
         }
         try {
             return ResponseEntity.ok(facade.transferAnimal(params.animalName(), params.from(), params.to()));
