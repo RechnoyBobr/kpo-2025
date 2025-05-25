@@ -4,6 +4,7 @@ plugins {
     jacoco
     id("org.springframework.boot") version "3.4.2"
     id("io.spring.dependency-management") version "1.1.7"
+    id("org.liquibase.gradle") version "2.0.4"
 }
 
 group = "hse"
@@ -18,7 +19,7 @@ checkstyle {
 
 java {
     toolchain {
-        languageVersion = JavaLanguageVersion.of(22)
+        languageVersion = JavaLanguageVersion.of(21)
     }
 }
 
@@ -37,8 +38,13 @@ dependencies {
 
     implementation("org.springframework.boot:spring-boot-starter-web")
 
+    implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+    runtimeOnly("org.postgresql:postgresql")
+    implementation("org.liquibase:liquibase-core")
+    liquibaseRuntime("org.liquibase:liquibase-core")
+    liquibaseRuntime("org.liquibase.ext:liquibase-hibernate6:5.0.0")
+
     implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.5")
-    implementation("org.springframework.boot:spring-boot-starter-validation")
 
     compileOnly("org.projectlombok:lombok")
     annotationProcessor("org.projectlombok:lombok")
@@ -51,7 +57,6 @@ dependencies {
 
     implementation("com.fasterxml.jackson.core:jackson-databind:2.18.2")
 
-    compileOnly("org.apache.tomcat:annotations-api:6.0.53")
 }
 
 
