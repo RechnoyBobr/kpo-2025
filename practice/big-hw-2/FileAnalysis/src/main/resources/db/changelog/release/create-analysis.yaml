@@ -1,0 +1,31 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1748121518937-1
+      author: admin
+      changes:
+        - createTable:
+            tableName: analysis_results
+            columns:
+              - column:
+                  name: id
+                  type: uuid
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: file_id
+                  type: uuid
+                  constraints:
+                    nullable: false
+              - column:
+                  name: similarity_score
+                  type: double precision
+              - column:
+                  name: matched_files
+                  type: text
+              - column:
+                  name: analysis_status
+                  type: varchar(20)
+        - addDefaultValue:
+            tableName: analysis_results
+            columnName: id
+            defaultValueComputed: gen_random_uuid() 

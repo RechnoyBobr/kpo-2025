@@ -2,3 +2,9 @@ databaseChangeLog:
   - include:
       file: create-storing.yaml
       relativeToChangelogFile: true
+  - include:
+      file: create-hashes.yaml
+      relativeToChangelogFile: true
+  - include:
+      file: alter-hashes.yaml
+      relativeToChangelogFile: true

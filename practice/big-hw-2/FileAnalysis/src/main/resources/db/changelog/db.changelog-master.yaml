@@ -1,0 +1,4 @@
+databaseChangeLog:
+  - include:
+      file: release/create-analysis.yaml
+      relativeToChangelogFile: true

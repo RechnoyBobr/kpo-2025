@@ -5,19 +5,19 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.Size;
+import java.util.List;
 import java.util.UUID;
 import lombok.Getter;
 import lombok.Setter;
 
 /**
- * File entity.
+ * File hash entity.
  */
 @Entity
 @Getter
 @Setter
-@Table(name = "files")
-public class FileEntity {
+@Table(name = "file_hashes")
+public class FileHash {
     /**
      * Id.
      */
@@ -26,14 +26,18 @@ public class FileEntity {
     @Column(name = "id", nullable = false)
     private UUID id;
     /**
-     * File path.
+     * File id.
      */
-    @Column(name = "filepath", length = 255)
-    private String filePath;
+    @Column(name = "file_id", nullable = false)
+    private UUID fileId;
     /**
-     * File original name.
+     * List of sentence hashes.
      */
-    @Size(max = 255)
-    @Column(name = "name")
-    private String name;
-}
+    @Column(name = "sentence_hash", nullable = false, columnDefinition = "integer[]")
+    private List<Integer> sentenceHash;
+    /**
+     * File content.
+     */
+    @Column(name = "file_text")
+    private String fileText;
+} 

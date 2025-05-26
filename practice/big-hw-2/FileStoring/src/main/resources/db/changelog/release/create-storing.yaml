@@ -12,8 +12,8 @@ databaseChangeLog:
                   constraints:
                     primaryKey: true
               - column:
-                  name: file
-                  type: bytea
+                  name: filepath
+                  type: varchar(255)
               - column:
                   name: name
                   type: varchar(255)

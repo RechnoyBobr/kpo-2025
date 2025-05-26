@@ -1,0 +1,9 @@
+databaseChangeLog:
+  - changeSet:
+      id: 0
+      author: admin
+      changes:
+        - renameColumn:
+            tableName: file_hashes
+            oldColumnName: fileText
+            newColumnName: file_text

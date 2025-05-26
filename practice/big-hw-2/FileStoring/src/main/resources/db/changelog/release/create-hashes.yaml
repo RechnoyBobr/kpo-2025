@@ -1,0 +1,36 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1748121518937-2
+      author: admin
+      changes:
+        - createTable:
+            tableName: file_hashes
+            columns:
+              - column:
+                  name: id
+                  type: uuid
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: file_id
+                  type: uuid
+                  constraints:
+                    nullable: false
+              - column:
+                  name: sentence_hash
+                  type: integer[]
+                  constraints:
+                    nullable: false
+              - column:
+                  name: fileText
+                  type: text
+        - addDefaultValue:
+            tableName: file_hashes
+            columnName: id
+            defaultValueComputed: gen_random_uuid()
+        - addForeignKeyConstraint:
+            baseTableName: file_hashes
+            baseColumnNames: file_id
+            constraintName: fk_file_hashes_file_id
+            referencedTableName: files
+            referencedColumnNames: id 
