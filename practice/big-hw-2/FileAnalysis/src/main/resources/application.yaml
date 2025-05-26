@@ -1,0 +1,11 @@
+spring:
+  application:
+    name: antiplag-analysis
+  liquibase:
+    enabled: true
+    change-log: classpath:/db/changelog/db.changelog-master.yaml
+  datasource:
+    url: jdbc:postgresql://pg-service:5432/antiplug
+    username: admin
+    password: passwd
+    driver-class-name: org.postgresql.Driver

@@ -1,0 +1,55 @@
+services:
+  gateway:
+    build:
+      context: APIGateway/
+    networks:
+      - gateway
+    ports:
+      - "8080:8080"
+
+  file-storing:
+    build:
+      context: FileStoring/
+    networks:
+      - gateway
+      - db
+    volumes:
+      - file-storage:/data/files
+    depends_on:
+      pg-service:
+        condition: service_healthy
+
+  file-analysis:
+    build:
+      context: FileAnalysis/
+    networks:
+      - db
+      - gateway
+
+  pg-service:
+    image: postgres:17
+    environment:
+      POSTGRES_DB: "antiplug"
+      POSTGRES_USER: "admin"
+      POSTGRES_PASSWORD: "passwd"
+    ports:
+      - "5444:5432"
+    networks:
+      - db
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U admin -d antiplug" ]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+networks:
+  db:
+    driver: bridge
+  gateway:
+    driver: bridge
+
+volumes:
+  postgres_data:
+  file-storage:
