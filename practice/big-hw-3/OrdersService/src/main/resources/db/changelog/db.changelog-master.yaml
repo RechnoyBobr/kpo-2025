@@ -1,0 +1,7 @@
+databaseChangeLog:
+  - include:
+      relativeToChangelogFile: true
+      file: migrations/db.create-orders.yaml
+  - include:
+      relativeToChangelogFile: true
+      file: migrations/db.create-orders-tasks.yaml

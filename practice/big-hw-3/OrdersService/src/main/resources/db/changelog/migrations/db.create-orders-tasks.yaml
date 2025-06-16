@@ -1,0 +1,24 @@
+databaseChangeLog:
+  - changeSet:
+      id: 0
+      author: admin
+      changes:
+        - createTable:
+            tableName: orders_tasks
+            columns:
+              - column:
+                  name: id
+                  type: integer
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: amount
+                  type: double
+              - column:
+                  name: user_id
+                  type: integer
+              - column:
+                  name: is_finished
+                  type: boolean
+                  constraints:
+                    nullable: false

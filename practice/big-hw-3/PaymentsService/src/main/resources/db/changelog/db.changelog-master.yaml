@@ -1,0 +1,10 @@
+databaseChangeLog:
+  - include:
+      relativeToChangelogFile: true
+      file: migrations/db.create-accounts.yaml
+  - include:
+      relativeToChangelogFile: true
+      file: migrations/db.create-accounts-tasks.yaml
+  - include:
+      relativeToChangelogFile: true
+      file: migrations/db.alter-accounts-tasks.yaml

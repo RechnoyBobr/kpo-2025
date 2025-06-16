@@ -1,0 +1,3 @@
+gateway:
+  order-service-url: http://orders-service:8080/
+  payments-service-url: http://payments-service:8080/
