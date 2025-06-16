@@ -1,4 +1,3 @@
 gateway:
-  order-service-url: https://orders:8080/
-  payments-service-url: https://payments:8080/
-spring:
+  order-service-url: http://orders-service:8080/
+  payments-service-url: http://payments-service:8080/

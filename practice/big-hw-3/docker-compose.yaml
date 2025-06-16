@@ -1,21 +1,13 @@
 name: shopping-service
 services:
-  frontend:
-    build:
-      context: frontend
-    networks:
-      - frontend
-    ports:
-      - "80:80"
 
   api-gateway:
     build:
       context: APIGateway
-    depends_on:
-      - frontend
     networks:
       - internal
-      - frontend
+    ports:
+      - "8080:8080"
 
   orders-service:
     build:
@@ -25,7 +17,7 @@ services:
       - postgres
     networks:
       - internal
-      - kafka
+      - kafka-network
       - db
 
   payments-service:
@@ -36,7 +28,7 @@ services:
       - postgres
     networks:
       - internal
-      - kafka
+      - kafka-network
       - db
 
   zookeeper:
@@ -47,7 +39,7 @@ services:
     environment:
       - ALLOW_ANONYMOUS_LOGIN=yes
     networks:
-      - kafka
+      - kafka-network
 
   kafka:
     image: bitnami/kafka:3.3
@@ -64,11 +56,9 @@ services:
       - KAFKA_CFG_AUTO_CREATE_TOPICS_ENABLE=true
     depends_on:
       - zookeeper
-    healthcheck:
-      test: ["CMD", "kafka-broker-api-versions.sh", "--bootstrap-server=localhost:9092"]
-      interval: 10s
-      timeout: 5s
-      retries: 3
+    networks:
+      - kafka-network
+
 
   postgres:
     image: postgres:17
@@ -78,6 +68,8 @@ services:
       POSTGRES_PASSWORD: postgres
     networks:
       - db
+    ports:
+      - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
     healthcheck:
@@ -85,11 +77,11 @@ services:
       interval: 5s
       timeout: 5s
       retries: 5
+
 networks:
   internal:
   db:
-  kafka:
-  frontend:
+  kafka-network:
 
 volumes:
   postgres_data:

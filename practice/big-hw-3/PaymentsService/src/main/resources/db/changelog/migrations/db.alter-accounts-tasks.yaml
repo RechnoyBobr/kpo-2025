@@ -1,0 +1,18 @@
+databaseChangeLog:
+  - changeSet:
+      id: 0
+      author: admin
+      changes:
+        - addColumn:
+            tableName: accounts_tasks
+            columns:
+              - column:
+                  name: user_id
+                  type: integer
+                  constraints:
+                    nullable: false
+              - column:
+                  name: status
+                  type: boolean
+                  constraints:
+                    nullable: false
